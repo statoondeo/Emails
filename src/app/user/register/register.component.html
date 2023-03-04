@@ -1,0 +1,74 @@
+<h1>Inscription</h1>
+<form #form="ngForm" (submit)="onSubmit()">
+  <div class="form-group mb-2">
+    <input
+      [(ngModel)]="subscription.email"
+      [ngModelOptions]="{ name: 'email' }"
+      required
+      email
+      #email="ngModel"
+      [class.is-invalid]="email.touched && email.invalid"
+      [class.is-valid]="email.touched && email.valid"
+      type="email"
+      placeholder="Votre adresse email"
+      class="form-control"
+    />
+    <p
+      class="invalid-feedback"
+      *ngIf="email.touched && email.hasError('required')"
+    >
+      Le mail est obligatoire
+    </p>
+    <p
+      class="invalid-feedback"
+      *ngIf="email.touched && email.hasError('email')"
+    >
+      Le mail est invalide
+    </p>
+  </div>
+  <div class="form-group mb-2" ngModelGroup="security" password-confirmation>
+    <input
+      [ngModelOptions]="{ name: 'password' }"
+      [(ngModel)]="subscription.security.password"
+      #password="ngModel"
+      required
+      minlength="8"
+      [class.is-invalid]="password.touched && password.invalid"
+      [class.is-valid]="password.touched && password.valid"
+      type="password"
+      placeholder="Mot de passe"
+      class="form-control mb-2"
+    />
+    <p
+      class="invalid-feedback"
+      *ngIf="password.touched && password.hasError('required')"
+    >
+      Le password est obligatoire
+    </p>
+    <p
+      class="invalid-feedback"
+      *ngIf="password.touched && password.hasError('minlength')"
+    >
+      Le mot de passe doit contenir au moins 8 caractères
+    </p>
+    <input
+      [ngModelOptions]="{ name: 'confirm' }"
+      [(ngModel)]="subscription.security.confirmation"
+      #confirmation="ngModel"
+      [class.is-invalid]="confirmation.touched && confirmation.invalid"
+      [class.is-valid]="confirmation.touched && confirmation.valid"
+      type="password"
+      placeholder="Confirmation du mot de passe"
+      class="form-control"
+    />
+    <p
+      class="invalid-feedback"
+      *ngIf="confirmation.touched && confirmation.hasError('confirm')"
+    >
+      La confirmation ne correspond pas
+    </p>
+  </div>
+  <button class="btn btn-success" type="submit" [disabled]="!form.valid">
+    S'inscrire
+  </button>
+</form>
